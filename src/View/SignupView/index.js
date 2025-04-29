@@ -69,7 +69,7 @@ function SignupView() {
       style={{ backgroundImage: "url('https://pngmagic.com/product_images/dark-yellow-background.jpg')" }}
     >
       <div
-        className="w-full max-w-2xl bg-white rounded-xl p-10 transform transition duration-500 hover:shadow-2xl hover:scale-105"
+        className="w-full max-w-lg bg-white rounded-xl p-5 transform transition duration-500 hover:shadow-2xl hover:scale-105"
         style={{
           boxShadow: "0 15px 35px -10px rgba(0, 0, 0, 0.9), 0 15px 15px -10px rgba(0, 0, 0, 0.2)",
         }}
