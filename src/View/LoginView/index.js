@@ -48,7 +48,7 @@ const Login = () => {
               <div className="rounded-md shadow-sm">
                 <div>
                   <label className="sr-only" htmlFor="email">
-                    Email address
+                    Email address 
                   </label>
                   <input
                     placeholder="Email address"

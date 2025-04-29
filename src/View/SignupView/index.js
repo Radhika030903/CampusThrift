@@ -106,10 +106,11 @@ function SignupView() {
               onChange={(e) => setInstitute(e.target.value)}
             >
               <option value="">Select Institute</option>
+              <option value="Birla Insstitute of Applied Sciences">Birla Institute of Applied Sciences</option>
               <optgroup label="IITs">
                 <option value="IIT Bombay">IIT Bombay</option>
                 <option value="IIT Delhi">IIT Delhi</option>
-                <option value="IIT Kanpur">IIT Kanpur</option>
+                <option value="IIT Kanpur">IIT Kanpuria</option>
               </optgroup>
               <optgroup label="NITs">
                 <option value="NIT Trichy">NIT Trichy</option>
