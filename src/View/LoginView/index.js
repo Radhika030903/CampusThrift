@@ -1,15 +1,14 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom"; // Import useNavigate and useLocation
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const location = useLocation(); // Add this
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +38,7 @@ const Login = () => {
               "0 15px 35px -10px rgba(0, 0, 0, 0.9), 0 15px 15px -10px rgba(0, 0, 0, 0.2)",
             animation: "moveIn 1s ease-out",
           }}
-          className="bg-white rounded-lg shadow-xl overflow-hidden max-w-lg w-full transform translate-x-0"
+          className="bg-white rounded-lg shadow-2xl overflow-hidden max-w-lg w-full transform transition duration-500 hover:shadow-2xl hover:scale-105"
         >
           <div className="p-8">
             <h2 className="text-center text-3xl font-extrabold text-gray-900">Welcome Back</h2>

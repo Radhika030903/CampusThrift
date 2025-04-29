@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate } from "react-router-dom";
 import { auth, db } from "../../firebase";
+
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
@@ -40,12 +41,10 @@ function SignupView() {
 
     setLoading(true);
     try {
-      // Create user in Firebase Auth
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
       if (user) {
-        // Store user data in Firestore
         await setDoc(doc(db, "Users", user.uid), {
           email: user.email,
           name,
@@ -55,12 +54,9 @@ function SignupView() {
           createdAt: new Date(),
         });
         toast.success("User registered successfully!", { position: "top-center" });
-
-        // Redirect to Login Page
         navigate("/login");
       }
     } catch (error) {
-      console.error("Signup Error:", error.message);
       toast.error(error.message, { position: "bottom-center" });
     } finally {
       setLoading(false);
@@ -69,107 +65,182 @@ function SignupView() {
 
   return (
     <div
-      className="flex justify-center items-center min-h-screen bg-cover bg-center"
+      className="min-h-screen flex items-center justify-center bg-cover bg-center"
       style={{ backgroundImage: "url('https://pngmagic.com/product_images/dark-yellow-background.jpg')" }}
     >
       <div
+        className="w-full max-w-2xl bg-white rounded-xl p-10 transform transition duration-500 hover:shadow-2xl hover:scale-105"
         style={{
-          boxShadow: "0 20px 50px -10px rgba(0, 0, 0, 0.9), 0 20px 20px -10px rgba(0, 0, 0, 0.3)",
-          animation: "moveIn 1s ease-out",
+          boxShadow: "0 15px 35px -10px rgba(0, 0, 0, 0.9), 0 15px 15px -10px rgba(0, 0, 0, 0.2)",
         }}
-        className="bg-white rounded-lg shadow-xl overflow-hidden max-w-[85vh] w-full max-h-[80vh] h-auto"
       >
-        <div className="p-6">
-          <h2 className="text-center text-2xl font-extrabold text-gray-900">Create Account</h2>
-          <form onSubmit={handleSignup} className="mt-6 space-y-4">
+        <h2 className="text-3xl font-bold mb-6 text-center text-[#3A1E08]">Create Your Account</h2>
+        <form onSubmit={handleSignup} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium mb-1 text-gray-700">Name</label>
             <input
-              placeholder="Name"
-              className="block w-full px-3 py-2 border border-gray-300 bg-gray-100 rounded-md"
+              type="text"
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-900 focus:outline-none focus:ring-[#3A1E08] focus:border-[#3A1E08]"
             />
+          </div>
 
+          <div>
+            <label className="block text-sm font-medium mb-1 text-gray-700">Institute Email</label>
             <input
-              placeholder="Institute Email"
               type="email"
-              className="block w-full px-3 py-2 border border-gray-300 bg-gray-100 rounded-md"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-900 focus:outline-none focus:ring-[#3A1E08] focus:border-[#3A1E08]"
             />
+          </div>
 
+          <div>
+            <label className="block text-sm font-medium mb-1 text-gray-700">Institute</label>
             <select
-              className="block w-full px-3 py-2 border border-gray-300 bg-gray-100 rounded-md"
               required
               value={institute}
               onChange={(e) => setInstitute(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-900 focus:outline-none focus:ring-[#3A1E08] focus:border-[#3A1E08]"
             >
               <option value="">Select Institute</option>
-              <option value="Birla Insstitute of Applied Sciences">Birla Institute of Applied Sciences</option>
               <optgroup label="IITs">
-                <option value="IIT Bombay">IIT Bombay</option>
-                <option value="IIT Delhi">IIT Delhi</option>
-                <option value="IIT Kanpur">IIT Kanpuria</option>
+                <option>IIT Bombay</option>
+                <option>IIT Delhi</option>
+                <option>IIT Kanpur</option>
+                <option>IIT Madras</option>
+                <option>IIT Kharagpur</option>
+                <option>IIT Roorkee</option>
+                <option>IIT Guwahati</option>
+                <option>IIT BHU</option>
+                <option>IIT Hyderabad</option>
+                <option>IIT Indore</option>
+                <option>IIT Ropar</option>
+                <option>IIT Mandi</option>
+                <option>IIT Gandhinagar</option>
+                <option>IIT Jodhpur</option>
+                <option>IIT Patna</option>
+                <option>IIT Palakkad</option>
+                <option>IIT Tirupati</option>
+                <option>IIT Bhilai</option>
+                <option>IIT Goa</option>
+                <option>IIT Jammu</option>
               </optgroup>
               <optgroup label="NITs">
-                <option value="NIT Trichy">NIT Trichy</option>
-                <option value="NIT Surathkal">NIT Surathkal</option>
-                <option value="NIT Warangal">NIT Warangal</option>
+                <option>NIT Trichy</option>
+                <option>NIT Surathkal</option>
+                <option>NIT Warangal</option>
               </optgroup>
+              <option>Birla Institute of Applied Sciences</option>
             </select>
+          </div>
 
-            <select
-              className="block w-full px-3 py-2 border border-gray-300 bg-gray-100 rounded-md"
-              required
-              value={state}
-              onChange={(e) => setState(e.target.value)}
-            >
-              <option value="">Select State</option>
-              <option value="Uttarakhand">Uttarakhand</option>
-              <option value="Delhi">Delhi</option>
-              <option value="Maharashtra">Maharashtra</option>
-            </select>
+          <div className="flex gap-4">
+            <div className="w-1/2">
+              <label className="block text-sm font-medium mb-1 text-gray-700">State</label>
+              <select
+                required
+                value={state}
+                onChange={(e) => setState(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-900 focus:outline-none focus:ring-[#3A1E08] focus:border-[#3A1E08]"
+              >
+                <option value="">Select State</option>
+                <option>Uttarakhand</option>
+                <option>Delhi</option>
+                <option>Maharashtra</option>
+                <option>Andhra Pradesh</option>
+    <option>Arunachal Pradesh</option>
+    <option>Assam</option>
+    <option>Bihar</option>
+    <option>Chhattisgarh</option>
+    <option>Goa</option>
+    <option>Gujarat</option>
+    <option>Haryana</option>
+    <option>Himachal Pradesh</option>
+    <option>Jharkhand</option>
+    <option>Karnataka</option>
+    <option>Kerala</option>
+    <option>Madhya Pradesh</option>
+    <option>Maharashtra</option>
+    <option>Manipur</option>
+    <option>Meghalaya</option>
+    <option>Mizoram</option>
+    <option>Nagaland</option>
+    <option>Odisha</option>
+    <option>Punjab</option>
+    <option>Rajasthan</option>
+    <option>Sikkim</option>
+    <option>Tamil Nadu</option>
+    <option>Telangana</option>
+    <option>Tripura</option>
+    <option>Uttarakhand</option>
+    <option>Uttar Pradesh</option>
+    <option>West Bengal</option>
+    <option>Andaman and Nicobar Islands</option>
+    <option>Chandigarh</option>
+    <option>Dadra and Nagar Haveli and Daman and Diu</option>
+    <option>Lakshadweep</option>
+    <option>Delhi</option>
+    <option>Puducherry</option>
+              </select>
+            </div>
 
-            <input
-              placeholder="City"
-              className="block w-full px-3 py-2 border border-gray-300 bg-gray-100 rounded-md"
-              required
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-            />
+            <div className="w-1/2">
+              <label className="block text-sm font-medium mb-1 text-gray-700">City</label>
+              <input
+                type="text"
+                required
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-900 focus:outline-none focus:ring-[#3A1E08] focus:border-[#3A1E08]"
+              />
+            </div>
+          </div>
 
-            <input
-              placeholder="Password"
-              type="password"
-              className="block w-full px-3 py-2 border border-gray-300 bg-gray-100 rounded-md"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+          <div className="flex gap-4">
+            <div className="w-1/2">
+              <label className="block text-sm font-medium mb-1 text-gray-700">Password</label>
+              <input
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-900 focus:outline-none focus:ring-[#3A1E08] focus:border-[#3A1E08]"
+              />
+            </div>
 
-            <input
-              placeholder="Confirm Password"
-              type="password"
-              className="block w-full px-3 py-2 border border-gray-300 bg-gray-100 rounded-md"
-              required
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
+            <div className="w-1/2">
+              <label className="block text-sm font-medium mb-1 text-gray-700">Confirm Password</label>
+              <input
+                type="password"
+                required
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-900 focus:outline-none focus:ring-[#3A1E08] focus:border-[#3A1E08]"
+              />
+            </div>
+          </div>
 
-            <button
-              type="submit"
-              className={`w-full py-2 text-white bg-blue-600 rounded-md ${
-                loading ? "opacity-50 cursor-not-allowed" : ""
-              }`}
-              disabled={loading}
-            >
-              {loading ? "Signing up..." : "Sign Up"}
-            </button>
-          </form>
-        </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-[#3A1E08] text-white py-2 px-4 rounded-md hover:bg-[#543014] transition"
+          >
+            {loading ? "Signing up..." : "Sign Up"}
+          </button>
+
+            <div className="px-7 py-8 bg-gray-100 text-center">
+                      <span className="text-gray-600">Already have an account ?</span>
+                      <Link className="font-medium text-[#3A1E08] hover:text-[#543014]" to="/login">
+                        Sign in
+                      </Link>
+                    </div>
+        </form>
+        <ToastContainer position="bottom-center" />
       </div>
-      <ToastContainer position="bottom-center" />
     </div>
   );
 }
